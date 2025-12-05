@@ -1,18 +1,32 @@
-import http, { IncomingMessage, Server, ServerResponse } from 'http';
-import config from './config';
-const server: Server = http.createServer((req : IncomingMessage,res : ServerResponse)=>{
-console.log("Server is running")
+import http, { IncomingMessage, Server, ServerResponse } from "http";
+import config from "./config";
+import { url } from "inspector";
+const server: Server = http.createServer(
+  (req: IncomingMessage, res: ServerResponse) => {
+    console.log("Server is running");
 
-if(req.url =="/" && req.method =="GET"){
-    res.writeHead(200, {"content-type": "Application/json"})
-    res.end(JSON.stringify({
-        message:"Hello node js with typescript",
-        path: req.url,
-    }))
-}
+    if (req.url == "/" && req.method == "GET") {
+      res.writeHead(200, { "content-type": "Application/json" });
+      res.end(
+        JSON.stringify({
+          message: "Hello node js with typescript",
+          path: req.url,
+        })
+      );
+    }
 
-})
+    if (req.url == "/api" && req.method == "GET") {
+      res.writeHead(200, { "content-type": "Application/json" });
+      res.end(
+        JSON.stringify({
+          message: "Health status ok",
+          path: req.url,
+        })
+      );
+    }
+  }
+);
 
-server.listen(config.port, ()=>{
-    console.log(`Server is running ${config.port}`)
-})
+server.listen(config.port, () => {
+  console.log(`Server is running ${config.port}`);
+});
